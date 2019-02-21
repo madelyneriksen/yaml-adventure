@@ -1,0 +1,15 @@
+.game__uploader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  &__label {
+    padding: 1rem 2rem;
+    border: 2px solid black;
+    display: block;
+  }
+  &__input {
+    display: none;
+  }
+}
