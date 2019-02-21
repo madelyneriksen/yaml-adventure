@@ -1,6 +1,7 @@
 import React from 'react';
 import TextBox from './game/text-box';
 import GameButton from './game/button';
+import ButtonHolder from './game/button-holder';
 
 
 export default () => {
@@ -17,7 +18,9 @@ Create your adventure file and save it as a yaml.
   return (
     <React.Fragment>
       <TextBox text={text} />
-      <GameButton text="Let's Play!" value="getting_started" onClick={clickCallback} />
+      <ButtonHolder>
+        <GameButton text="Let's Play!" value="getting_started" onClick={clickCallback} />
+      </ButtonHolder>
     </React.Fragment>
 
   )
