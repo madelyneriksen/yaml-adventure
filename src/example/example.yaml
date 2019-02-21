@@ -1,0 +1,24 @@
+start:
+  text: |
+    Welcome to YAML Adventure! You are totally playing this game
+  options:
+    - text: Start Me Up!
+      location: step_two
+    - text: Nah, let's quit.
+      location: end
+
+step_two:
+  text: |
+    This is another step of the game.
+
+    In games, you can click through options to progress. That's nifty, right?
+  options:
+    - text: Cool, back to start!
+      location: start
+    - text: Nice. I'm done!
+      location: end
+
+end:
+  text: |
+    Thanks for stopping by! This is the final screen.
+  options: []
