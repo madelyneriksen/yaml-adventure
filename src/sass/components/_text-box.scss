@@ -1,9 +1,15 @@
 .game__text-box {
   display: block;
-  padding: 10rem .5rem;
-  min-height: 75vh;
+  padding: .5rem .5rem;
+  min-height: 50vh;
   font-family: inherit;
   font-size: inherit;
   white-space: pre-wrap;
   word-break: break-word;
+  @media screen and (min-width: 30em) {
+    padding: 3rem 3rem;
+  }
+  @media screen and (min-width: 60em) {
+    padding: 10rem 10rem;
+  }
 }
