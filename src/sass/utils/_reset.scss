@@ -39,11 +39,17 @@ tr, th, td {
 
 // Typography
 body {
-  font-size: 12px;
-  line-height: 1.6;
   font-family: "Press Start 2P", monospace;
   font-smooth: never;
   -webkit-font-smooth: never;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 16px;
 }
 
 a, a:visited { color: inherit; }
