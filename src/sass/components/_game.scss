@@ -1,0 +1,6 @@
+.game {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(50%, 1fr) minmax(50%, 1fr);
+  min-height: 100vh;
+}

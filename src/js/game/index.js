@@ -62,17 +62,19 @@ export default class Game extends React.Component {
       internals = (
         <React.Fragment>
           <TextBox text={this.state.active.text} />
-          <ButtonHolder>
-            {this.state.active.options.map((option) => (
-              <Button
-                text={option.text}
-                value={option.location}
-                onClick={this.changeLocation}
-              />
-            ))}
-          </ButtonHolder>
-          <QuitButton
-            clearGame={this.clearGame} />
+          <div className="game__controls">
+            <ButtonHolder>
+              {this.state.active.options.map((option) => (
+                <Button
+                  text={option.text}
+                  value={option.location}
+                  onClick={this.changeLocation}
+                />
+              ))}
+            </ButtonHolder>
+            <QuitButton
+              clearGame={this.clearGame} />
+          </div>
         </React.Fragment>
       )
     } else {
