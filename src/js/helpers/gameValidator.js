@@ -2,24 +2,28 @@
 
 
 export default function validateGame(game) {
+  try {
   const keys = Object.keys(game);
   if (!keys.includes("start")) {
-    return [false, game];
+    throw "Not a valid game."
   }
-  for (var i = 0;i<keys.length;i++) {
+  for (var i = 0; i<keys.length; i++) {
     var key = keys[i];
     if (typeof game[key].text !== 'string') {
-      return [false, game];
+      throw "Not a valid game."
     };
     if (Array.isArray(game[key].options)) {
       var options = game[key].options;
-      for (var x = 0;x<options.length;x++) {
+      for (var x = 0; x<options.length; x++) {
         var option = options[x];
         if (!(typeof option.text === 'string' && keys.includes(option.location))) {
-          return [false, game];
+          throw "Not a valid game."
         };
       };
     };
+  };
+  } catch(error) {
+    return [false, game];
   };
   return [true, game]
 };
