@@ -12,8 +12,8 @@ export default class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      game: false,
-      active: {},
+      game: props.game ? props.game : false,
+      active: props.game && props.game.start ? props.game.start : false,
     }
     this.changeLocation = this.changeLocation.bind(this);
     this.uploadGame = this.uploadGame.bind(this);
@@ -64,9 +64,10 @@ export default class Game extends React.Component {
           <TextBox text={this.state.active.text} />
           <div className="game__controls">
             <ButtonHolder>
-              {this.state.active.options.map((option) => (
+              {this.state.active.options && this.state.active.options.map((option) => (
                 <Button
                   text={option.text}
+                  key={option.text}
                   value={option.location}
                   onClick={this.changeLocation}
                 />
