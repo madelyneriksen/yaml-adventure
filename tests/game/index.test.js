@@ -15,7 +15,7 @@ it("populates initial game state", () => {
     "start": {
       "text": "Welcome to the test adventure!",
       "options": [
-        {"text": "There is one option", "value": "start"},
+        {"text": "There is one option", "location": "start"},
       ]
     }
 
@@ -30,7 +30,7 @@ it("switches to different game states when options are selected", () => {
     "start": {
       "text": "This is another test adventure",
       "options": [
-        {"text": "Goto end", "value": "end"},
+        {"text": "Goto end", "location": "end"},
       ]
     },
     "end": {
@@ -44,4 +44,16 @@ it("switches to different game states when options are selected", () => {
   callback({});
   expect(game.state("active").text).toEqual("Welcome to the End");
   expect(game.state("active").options).toEqual([]);
+})
+
+it("prevents invalid game objects from populating props", () => {
+  const badGameState = {
+    "not_start_prop": {
+      "text": "There is no start prop",
+      "options": []
+    }
+  };
+  const game = shallow(<Game game={badGameState} />);
+  expect(game.state("game")).toEqual(false);
+  expect(game.state("active")).toEqual(false);
 })

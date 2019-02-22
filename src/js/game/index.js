@@ -6,14 +6,20 @@ import GameLoader from './game-loader.js';
 import QuitButton from './quit-button.js';
 import { safeLoad } from 'js-yaml';
 import sample_game from '../../example/example.yaml';
+import validateGame from '../helpers/gameValidator';
 
 
 export default class Game extends React.Component {
   constructor(props) {
     super(props);
+    if (!props.game) {
+      var [valid, game] = [false, {}];
+    } else {
+      var [valid, game] = validateGame(props.game);
+    }
     this.state = {
-      game: props.game ? props.game : false,
-      active: props.game && props.game.start ? props.game.start : false,
+      game: valid ? props.game : false,
+      active: valid ? props.game.start : false,
     }
     this.changeLocation = this.changeLocation.bind(this);
     this.uploadGame = this.uploadGame.bind(this);
