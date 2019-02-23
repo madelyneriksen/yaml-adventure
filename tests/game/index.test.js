@@ -76,3 +76,23 @@ it("Swaps to a newly provided game.", () => {
   game.instance().swapGame(gameTwo);
   expect(game.state("active").text).toEqual("Game two!");
 })
+
+it("Doesn't to a newly provided game if the game is invalid.", () => {
+  const gameOne = {
+    "start": {
+      "text": "Game one!",
+      "options": []
+    }
+  };
+  const gameTwo = {
+    "badStart": {
+      "text": "Invalid game!",
+      "options": []
+    }
+  };
+  const game = shallow(<Game game={gameOne} />);
+  expect(game.state("active").text).toEqual("Game one!");
+  game.instance().swapGame(gameTwo);
+  expect(game.state("active").text).toEqual("Game one!");
+  expect(game.state("error").includes('need a "start"')).toEqual(true);
+})
