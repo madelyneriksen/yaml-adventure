@@ -4,7 +4,6 @@ import ButtonHolder from './button-holder.js';
 import Button from './button.js';
 import GameLoader from './game-loader.js';
 import QuitButton from './quit-button.js';
-import { safeLoad } from 'js-yaml';
 import sample_game from '../../example/example.yaml';
 import validateGame from '../helpers/gameValidator';
 
@@ -13,16 +12,17 @@ export default class Game extends React.Component {
   constructor(props) {
     super(props);
     if (!props.game) {
-      var [valid, game] = [false, {}];
+      var [valid, game, msg] = [false, {}, ''];
     } else {
-      var [valid, game] = validateGame(props.game);
+      var [valid, game, msg] = validateGame(props.game);
     }
     this.state = {
       game: valid ? props.game : false,
       active: valid ? props.game.start : false,
+      error: msg,
     }
     this.changeLocation = this.changeLocation.bind(this);
-    this.uploadGame = this.uploadGame.bind(this);
+    this.swapGame = this.swapGame.bind(this);
     this.loadDefault = this.loadDefault.bind(this);
     this.clearGame = this.clearGame.bind(this);
   };
@@ -37,30 +37,28 @@ export default class Game extends React.Component {
     }
   };
 
-  uploadGame(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        var raw = String(event.target.result);
-        try {
-          var uploadedData = safeLoad(raw);
-          this.setState({game: uploadedData, active: uploadedData.start});
-        } catch (e) {
-          console.log(e);
-        };
-      };
-      reader.readAsText(file);
+  swapGame(uploadedGame) {
+    const [valid, game, msg] = validateGame(uploadedGame);
+    if (valid) {
+      this.setState({
+        game: game,
+        active: game.start,
+        error: '',
+      })
+    } else {
+      this.setState({
+        error: msg,
+      })
     }
-  };
+  }
 
   loadDefault(event) {
-    this.setState({game: sample_game, active: sample_game.start});
+    this.swapGame(sample_game);
   };
 
   clearGame(event) {
     this.setState({game: false, active: false});
-  }
+  };
 
   render() {
     var internals;
@@ -87,7 +85,7 @@ export default class Game extends React.Component {
     } else {
       internals = (
         <GameLoader
-          handler={this.uploadGame}
+          swapGame={this.swapGame}
           loadDefault={this.loadDefault}
         />
       )

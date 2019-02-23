@@ -57,3 +57,22 @@ it("prevents invalid game objects from populating props", () => {
   expect(game.state("game")).toEqual(false);
   expect(game.state("active")).toEqual(false);
 })
+
+it("Swaps to a newly provided game.", () => {
+  const gameOne = {
+    "start": {
+      "text": "Game one!",
+      "options": []
+    }
+  };
+  const gameTwo = {
+    "start": {
+      "text": "Game two!",
+      "options": [],
+    }
+  };
+  const game = shallow(<Game game={gameOne} />);
+  expect(game.state("active").text).toEqual("Game one!");
+  game.instance().swapGame(gameTwo);
+  expect(game.state("active").text).toEqual("Game two!");
+})

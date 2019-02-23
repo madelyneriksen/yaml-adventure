@@ -3,27 +3,29 @@
 
 export default function validateGame(game) {
   try {
-  const keys = Object.keys(game);
-  if (!keys.includes("start")) {
-    throw "Not a valid game."
-  }
-  for (var i = 0; i<keys.length; i++) {
-    var key = keys[i];
-    if (typeof game[key].text !== 'string') {
-      throw "Not a valid game."
-    };
-    if (Array.isArray(game[key].options)) {
-      var options = game[key].options;
-      for (var x = 0; x<options.length; x++) {
-        var option = options[x];
-        if (!(typeof option.text === 'string' && keys.includes(option.location))) {
-          throw "Not a valid game."
-        };
+    const keys = Object.keys(game);
+    if (!keys.includes("start")) {
+      throw 'YAML games need a "start" event.'
+    }
+    keys.forEach((key) => {
+      if (typeof game[key].text !== 'string') {
+        throw `${key} "text" property is not a valid string!`
       };
-    };
-  };
+      if (Array.isArray(game[key].options)) {
+        var options = game[key].options;
+        options.forEach((option) => {
+          if (typeof option.text !== 'string') {
+            throw `${key} - option "text" is not a valid string!`
+          } else if (!keys.includes(option.location)) {
+            throw `Location ${option.location} is in ${key} but not present in game!`
+          }
+        });
+      } else {
+        throw `${key} "options" property is not a valid array.`
+      }
+    });
   } catch(error) {
-    return [false, game];
+    return [false, game, error.message];
   };
-  return [true, game]
+  return [true, game, ''];
 };
