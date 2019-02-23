@@ -71,6 +71,7 @@ export default class Game extends React.Component {
       var internals = (
         <GameLoader
           swapGame={this.swapGame}
+          error={this.state.error}
           loadDefault={this.loadDefault} />
       )
     };

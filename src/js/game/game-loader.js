@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorBox from './error-box.js';
 import { safeLoad } from 'js-yaml';
 
 
@@ -39,6 +40,7 @@ export default class GameUploader extends React.Component {
         <button className="game__button--secondary" onClick={this.props.loadDefault}>
           Or load the example game
         </button>
+        <ErrorBox error={this.props.error} />
     </div>
     )
   }
