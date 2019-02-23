@@ -13,6 +13,17 @@ it("Marks games missing start locations as invalid", () => {
   expect(isValid).toEqual(false);
 })
 
+it("Returns error messages as a string.", () => {
+  const badGameState = {
+    "notStart": {
+      "text": "There is no start!",
+      "options": []
+    }
+  };
+  var [isValid, game, err] = validator(badGameState);
+  expect(typeof err).toEqual("string");
+})
+
 it("Marks location text that isn't a string as invalid", () => {
   const badGameState = {
     "start": {

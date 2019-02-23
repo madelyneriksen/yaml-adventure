@@ -25,7 +25,7 @@ export default function validateGame(game) {
       }
     });
   } catch(error) {
-    return [false, game, error.message];
+    return [false, game, error];
   };
   return [true, game, ''];
 };
