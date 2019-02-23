@@ -1,9 +1,7 @@
 import React from 'react';
 import TextBox from './text-box.js';
-import ButtonHolder from './button-holder.js';
-import Button from './button.js';
+import Controls from './controls/index.js';
 import GameLoader from './game-loader.js';
-import QuitButton from './quit-button.js';
 import sample_game from '../../example/example.yaml';
 import validateGame from '../helpers/gameValidator';
 
@@ -44,13 +42,11 @@ export default class Game extends React.Component {
         game: game,
         active: game.start,
         error: '',
-      })
+      });
     } else {
-      this.setState({
-        error: msg,
-      })
+      this.setState({error: msg});
     }
-  }
+  };
 
   loadDefault(event) {
     this.swapGame(sample_game);
@@ -61,39 +57,23 @@ export default class Game extends React.Component {
   };
 
   render() {
-    var internals;
     if (this.state.game) {
-      internals = (
-        <React.Fragment>
+      var internals = (
+        <div className="game">
           <TextBox text={this.state.active.text} />
-          <div className="game__controls">
-            <ButtonHolder>
-              {this.state.active.options && this.state.active.options.map((option) => (
-                <Button
-                  text={option.text}
-                  key={option.text}
-                  value={option.location}
-                  onClick={this.changeLocation}
-                />
-              ))}
-            </ButtonHolder>
-            <QuitButton
-              clearGame={this.clearGame} />
-          </div>
-        </React.Fragment>
+          <Controls
+            active={this.state.active}
+            clearGame={this.clearGame}
+            changeLocation={this.changeLocation} />
+        </div>
       )
     } else {
-      internals = (
+      var internals = (
         <GameLoader
           swapGame={this.swapGame}
-          loadDefault={this.loadDefault}
-        />
+          loadDefault={this.loadDefault} />
       )
     };
-    return (
-      <div className="game">
-        {internals}
-      </div>
-    )
+    return internals;
   }
 }
